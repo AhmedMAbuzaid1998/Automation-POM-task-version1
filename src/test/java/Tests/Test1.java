@@ -38,7 +38,7 @@ public class Test1 {
     }
 
     @AfterClass
-    public void tearDown() {
+    public void shutDown() {
         driver.quit();
     }
 }
