@@ -22,19 +22,22 @@ public class Test1 {
     @Test
     public void testFreeDocuments() {
         int freeDocCount = homePage.getFreeDocumentsCount();
+        System.out.println("Free documents: " + freeDocCount);
         homePage.printFreeDocuments();
         Assert.assertEquals(freeDocCount, 2, "Mismatch in expected number of free documents.");
+        Assert.assertEquals(homePage.freeElements.get(0).getText(), "Exchange a Waiver");
+        Assert.assertEquals(homePage.freeElements.get(1).getText(), "Send a Payment Document");
     }
+
 
     @Test
     public void testPriceDocuments() {
-        try {
+
             int priceDocCount = homePage.getPriceDocumentsCount();
+            System.out.println("Price documents: " + priceDocCount);
             homePage.printPriceDocuments();
-            Assert.assertTrue(priceDocCount > 0, "No price documents found.");
-        } catch (Exception e) {
-            Assert.fail("Error in testPriceDocuments: " + e.getMessage());
-        }
+            Assert.assertEquals(priceDocCount, 1);
+            Assert.assertEquals(homePage.pricedElements.get(0).getText(), "Send a Warning");
     }
 
     @AfterClass

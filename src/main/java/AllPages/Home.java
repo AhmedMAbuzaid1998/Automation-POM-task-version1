@@ -14,7 +14,8 @@ import java.util.List;
 public class Home {
     WebDriver driver;
     WebDriverWait wait;
-
+    public List<WebElement> freeElements ;
+    public List<WebElement> pricedElements ;
     public Home(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -52,31 +53,27 @@ public class Home {
     }
 
     public int getFreeDocumentsCount() {
-        return printDocumentsCount(dropdown, "Free document");
+        freeElements = driver.findElements(dropdown);
+        return freeElements.size();
     }
 
     public void printFreeDocuments() {
-        printDocuments(dropdown, "Free document");
-    }
-
-    public int getPriceDocumentsCount() {
-        return printDocumentsCount(getPrice, "Price between $" + minimumPrice + " and $" + maximumPrice + " document");
-    }
-
-    public void printPriceDocuments() {
-        printDocuments(getPrice, "Price between $" + minimumPrice + " and $" + maximumPrice + " document");
-    }
-
-    private void printDocuments(By locator, String message) {
-        List<WebElement> elements = driver.findElements(locator);
-        for (WebElement element : elements) {
-            System.out.println(message + ": " + element.getText());
+        freeElements = driver.findElements(dropdown);
+        for (WebElement document : freeElements) {
+            System.out.println("Free document: " + document.getText());
         }
     }
 
-    private int printDocumentsCount(By locator, String message) {
-        List<WebElement> elements = driver.findElements(locator);
-        System.out.println(message + " count: " + elements.size());
-        return elements.size();
+    public int getPriceDocumentsCount() {
+        pricedElements = driver.findElements(getPrice);
+        return pricedElements.size();
+    }
+
+    public void printPriceDocuments() {
+        pricedElements = driver.findElements(getPrice);
+        for (WebElement document : pricedElements) {
+            System.out.println("Price document between $" + minimumPrice + " and $" + maximumPrice
+                   + ":"+ document.getText());
+        }
     }
 }
